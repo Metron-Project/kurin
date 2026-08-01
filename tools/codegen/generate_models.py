@@ -9,7 +9,7 @@ Reads "Metron Comicbook Database.yaml" from the repo root and writes:
 
 Re-run manually whenever the schema file changes; the output is committed to the repo.
 
-Design rules (see /home/bpepple/.claude/plans/breezy-doodling-ocean.md for the full rationale):
+Design rules:
   - Every generated model property is nullable, regardless of the schema's `required` list.
     This keeps read/write DTOs interchangeable without constructor ceremony across ~90 schemas.
   - `Paginated*List` wrapper schemas are skipped; callers use the generic PagedResult<T> instead.
