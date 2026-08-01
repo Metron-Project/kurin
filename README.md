@@ -14,7 +14,11 @@ targeting .NET 10.
 
 ## Installation
 
-Reference the project directly, or build and pack it:
+```bash
+dotnet add package Metron.Api
+```
+
+Or reference the project directly, or build and pack it yourself:
 
 ```bash
 dotnet pack src/Metron.Api/Metron.Api.csproj
@@ -85,7 +89,10 @@ the schema changes:
 python3 tools/codegen/generate_models.py
 ```
 
-Requires Python 3 with PyYAML (`pip install pyyaml`).
+Requires Python 3 with PyYAML (`pip install pyyaml`). The script also has its own test suite
+(`python3 -m unittest discover -s tools/codegen`) and a `--check` mode that verifies the
+committed files match what generation would produce, without writing anything -- this runs in CI
+so a schema change nobody regenerated for gets caught automatically.
 
 ## Running tests
 
@@ -103,3 +110,7 @@ dotnet test
 - Retrying a request that carries a non-seekable file `Stream` (e.g. a manually attached image
   upload) after a `429` isn't supported; retries re-read buffered content, which requires
   seekable/re-readable request bodies.
+
+## License
+
+[GPL-3.0-or-later](LICENSE)
