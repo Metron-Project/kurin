@@ -2,3 +2,10 @@ bin/
 obj/
 *.user
 .vs/
+
+# Python (tools/codegen)
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
