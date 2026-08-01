@@ -2,6 +2,7 @@ bin/
 obj/
 *.user
 .vs/
+TestResults/
 
 # Python (tools/codegen)
 __pycache__/
