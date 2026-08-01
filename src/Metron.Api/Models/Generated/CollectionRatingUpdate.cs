@@ -13,7 +13,7 @@ namespace Metron.Api.Models;
 
 /// <summary>
 /// Update serializer for collection items - rating only.
-/// 
+///
 /// Read-tracking (is_read/date_read) is handled exclusively through the
 /// scrobble action, so this serializer intentionally excludes those fields.
 /// </summary>
