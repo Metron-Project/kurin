@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Metron.Api/Metron.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Metron.Api.Tests/Metron.Api.Tests.csproj" />
+  </Folder>
+</Solution>
