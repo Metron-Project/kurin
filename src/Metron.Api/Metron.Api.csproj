@@ -16,9 +16,9 @@
     <PackageTags>metron;comics;comicbook;api-client</PackageTags>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/bpepple/kurin.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Metron-Project/kurin.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/bpepple/kurin</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Metron-Project/kurin</PackageProjectUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
