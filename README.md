@@ -1,6 +1,6 @@
 # Metron.Api
 
-An C# client library for the [Metron](https://metron.cloud) comic book database API,
+A C# client library for the [Metron](https://metron.cloud) comic book database API,
 targeting .NET 10.
 
 - Covers the full API surface: arcs, characters, creators, credits, imprints, issues,
