@@ -15,6 +15,7 @@ public sealed class MetronClient : IDisposable
     private readonly HttpClient _http;
     private readonly RateLimitTracker _tracker = new();
 
+    /// <summary>Creates a client configured from <paramref name="options"/>.</summary>
     public MetronClient(MetronClientOptions options)
     {
         var transport = options.TransportHandler ?? new HttpClientHandler();
@@ -49,23 +50,57 @@ public sealed class MetronClient : IDisposable
     /// <summary>The most recently observed rate-limit snapshot, updated after every response.</summary>
     public RateLimitStatus? RateLimitStatus => _tracker.Current;
 
+    /// <summary>Story arcs.</summary>
     public ArcsClient Arc { get; }
+
+    /// <summary>Comic characters.</summary>
     public CharactersClient Character { get; }
+
+    /// <summary>The authenticated user's comic collection.</summary>
     public CollectionClient Collection { get; }
+
+    /// <summary>Comic creators.</summary>
     public CreatorsClient Creator { get; }
+
+    /// <summary>Credits linking a creator to an issue with a role.</summary>
     public CreditsClient Credit { get; }
+
+    /// <summary>Publisher imprints.</summary>
     public ImprintsClient Imprint { get; }
+
+    /// <summary>Individual comic issues.</summary>
     public IssuesClient Issue { get; }
+
+    /// <summary>Comic publishers.</summary>
     public PublishersClient Publisher { get; }
+
+    /// <summary>The authenticated user's pull list.</summary>
     public PullListClient PullList { get; }
+
+    /// <summary>Reading lists (read-only).</summary>
     public ReadingListClient ReadingList { get; }
+
+    /// <summary>Creator roles (read-only).</summary>
     public RolesClient Role { get; }
+
+    /// <summary>Comic series.</summary>
     public SeriesClient Series { get; }
+
+    /// <summary>Series types (read-only).</summary>
     public SeriesTypesClient SeriesType { get; }
+
+    /// <summary>Teams of characters.</summary>
     public TeamsClient Team { get; }
+
+    /// <summary>Fictional universes.</summary>
     public UniversesClient Universe { get; }
+
+    /// <summary>Variant covers.</summary>
     public VariantsClient Variant { get; }
+
+    /// <summary>The authenticated user's wish list.</summary>
     public WishListClient WishList { get; }
 
+    /// <summary>Disposes the underlying HttpClient.</summary>
     public void Dispose() => _http.Dispose();
 }

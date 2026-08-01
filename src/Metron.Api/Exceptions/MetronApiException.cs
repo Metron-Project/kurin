@@ -5,6 +5,7 @@ namespace Metron.Api.Exceptions;
 /// <summary>Thrown when the Metron API returns a non-success status code.</summary>
 public class MetronApiException : Exception
 {
+    /// <summary>The HTTP status code returned by the API.</summary>
     public HttpStatusCode StatusCode { get; }
 
     /// <summary>The "detail" field from the API's JSON error body, if present.</summary>

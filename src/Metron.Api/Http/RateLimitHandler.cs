@@ -20,6 +20,7 @@ public sealed class RateLimitHandler : DelegatingHandler
     private readonly int _maxRetryAttempts;
     private readonly TimeProvider _timeProvider;
 
+    /// <summary>Creates a handler that shares <paramref name="tracker"/>'s state across every request it sends.</summary>
     public RateLimitHandler(RateLimitTracker tracker, int maxRetryAttempts, TimeProvider? timeProvider = null)
     {
         _tracker = tracker;

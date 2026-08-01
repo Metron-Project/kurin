@@ -11,6 +11,7 @@ public sealed class RateLimitTracker
     private readonly object _gate = new();
     private RateLimitStatus? _status;
 
+    /// <summary>The most recently recorded rate-limit snapshot, or null if none has been observed yet.</summary>
     public RateLimitStatus? Current
     {
         get
@@ -22,6 +23,7 @@ public sealed class RateLimitTracker
         }
     }
 
+    /// <summary>Records the rate-limit headers from a response, if present.</summary>
     public void Update(HttpResponseHeaders headers)
     {
         var status = RateLimitStatus.FromHeaders(headers);

@@ -10,6 +10,7 @@ namespace Metron.Api.Http;
 /// </summary>
 public static class QueryStringBuilder
 {
+    /// <summary>Builds a query string (including the leading "?") from a filter's properties, or "" if none are set.</summary>
     public static string Build(object? filter)
     {
         if (filter is null)

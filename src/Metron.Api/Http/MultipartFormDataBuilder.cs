@@ -13,6 +13,7 @@ namespace Metron.Api.Http;
 /// </summary>
 public static class MultipartFormDataBuilder
 {
+    /// <summary>Serializes a generated model's properties into a multipart/form-data body.</summary>
     public static MultipartFormDataContent Build(object model)
     {
         var content = new MultipartFormDataContent();

@@ -3,11 +3,16 @@ using System.Net.Http.Headers;
 
 namespace Metron.Api.Http;
 
-
 /// <summary>
 /// A snapshot of the six X-RateLimit-* headers the Metron API returns on every response.
 /// See https://github.com/Metron-Project/metron/blob/master/api/RATELIMIT.md.
 /// </summary>
+/// <param name="BurstLimit">Total requests allowed in the current 1-minute burst window.</param>
+/// <param name="BurstRemaining">Requests left in the current burst window.</param>
+/// <param name="BurstReset">When the burst window's counter resets.</param>
+/// <param name="SustainedLimit">Total requests allowed in the current 1-day sustained window.</param>
+/// <param name="SustainedRemaining">Requests left in the current sustained window.</param>
+/// <param name="SustainedReset">When the sustained window's counter resets.</param>
 public sealed record RateLimitStatus(
     int? BurstLimit,
     int? BurstRemaining,
@@ -16,6 +21,7 @@ public sealed record RateLimitStatus(
     int? SustainedRemaining,
     DateTimeOffset? SustainedReset)
 {
+    /// <summary>Parses the six X-RateLimit-* headers from a response, or null if none are present.</summary>
     public static RateLimitStatus? FromHeaders(HttpResponseHeaders headers)
     {
         var burstLimit = GetInt(headers, "X-RateLimit-Burst-Limit");

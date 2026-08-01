@@ -6,6 +6,7 @@ public sealed class MetronClientOptions
     /// <summary>Metron API token, sent as "Authorization: Bearer &lt;ApiToken&gt;".</summary>
     public required string ApiToken { get; init; }
 
+    /// <summary>Root URL of the API. Override for testing against a different host.</summary>
     public Uri BaseAddress { get; init; } = new("https://metron.cloud/api/");
 
     /// <summary>

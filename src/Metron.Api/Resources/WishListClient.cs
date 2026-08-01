@@ -8,18 +8,23 @@ namespace Metron.Api.Resources;
 /// <summary>The authenticated user's wish list. Requires authentication.</summary>
 public sealed class WishListClient(HttpClient http, JsonSerializerOptions jsonOptions) : ResourceClientBase(http, jsonOptions)
 {
+    /// <summary>Returns a single page of wish lists.</summary>
     public Task<PagedResult<WishList>> ListAsync(WishListFilter? filter = null, CancellationToken cancellationToken = default) =>
         GetAsync<PagedResult<WishList>>("wish_list/" + QueryStringBuilder.Build(filter), cancellationToken);
 
+    /// <summary>Enumerates every wish list matching <paramref name="filter"/>, following pagination automatically.</summary>
     public IAsyncEnumerable<WishList> ListAllAsync(WishListFilter? filter = null, CancellationToken cancellationToken = default) =>
         AutoPageAsync<WishList>("wish_list/" + QueryStringBuilder.Build(filter), cancellationToken);
 
+    /// <summary>Returns a single wish list by id.</summary>
     public Task<WishList> GetAsync(int id, CancellationToken cancellationToken = default) =>
         GetAsync<WishList>($"wish_list/{id}/", cancellationToken);
 
+    /// <summary>Returns a single page of wish list items.</summary>
     public Task<PagedResult<WishListItemList>> GetItemsAsync(WishListItemsFilter? filter = null, CancellationToken cancellationToken = default) =>
         GetAsync<PagedResult<WishListItemList>>("wish_list/items/" + QueryStringBuilder.Build(filter), cancellationToken);
 
+    /// <summary>Enumerates every wish list item matching <paramref name="filter"/>, following pagination automatically.</summary>
     public IAsyncEnumerable<WishListItemList> GetItemsAllAsync(WishListItemsFilter? filter = null, CancellationToken cancellationToken = default) =>
         AutoPageAsync<WishListItemList>("wish_list/items/" + QueryStringBuilder.Build(filter), cancellationToken);
 
@@ -31,6 +36,7 @@ public sealed class WishListClient(HttpClient http, JsonSerializerOptions jsonOp
     public Task AcquireItemAsync(int itemPk, AcquireWishListItem acquisition, CancellationToken cancellationToken = default) =>
         SendFormNoResultAsync(HttpMethod.Post, $"wish_list/items/{itemPk}/acquire/", acquisition, cancellationToken);
 
+    /// <summary>Removes an item from the wish list.</summary>
     public Task RemoveItemAsync(int itemPk, CancellationToken cancellationToken = default) =>
         DeleteAsync($"wish_list/items/{itemPk}/remove/", cancellationToken);
 }
