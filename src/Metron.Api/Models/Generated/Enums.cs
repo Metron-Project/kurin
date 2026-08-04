@@ -32,6 +32,19 @@ public enum AttributionSourceEnum
 }
 
 /// <summary>
+/// * `PRINT` - Print
+/// * `DIGITAL` - Digital
+/// * `BOTH` - Both
+/// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum BookFormatEnum
+{
+    PRINT,
+    DIGITAL,
+    BOTH,
+}
+
+/// <summary>
 /// * `AF` - Afghanistan
 /// * `AX` - Åland Islands
 /// * `AL` - Albania
@@ -545,6 +558,19 @@ public enum CurrencyEnum
 {
     USD,
     GBP,
+}
+
+/// <summary>
+/// * `CGC` - CGC (Certified Guaranty Company)
+/// * `CBCS` - CBCS (Comic Book Certification Service)
+/// * `PGX` - PGX (Professional Grading Experts)
+/// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum GradingCompanyEnum
+{
+    CGC,
+    CBCS,
+    PGX,
 }
 
 public enum StatusEnum

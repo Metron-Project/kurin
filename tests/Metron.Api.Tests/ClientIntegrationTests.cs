@@ -103,4 +103,43 @@ public class ClientIntegrationTests
         Assert.Equal(HttpMethod.Post, request.Method);
         Assert.IsType<MultipartFormDataContent>(request.Content);
     }
+
+    [Fact]
+    public async Task Collection_AddAsync_SendsMultipartFormData_AndDeserializesResponse()
+    {
+        var fake = new FakeHttpMessageHandler();
+        fake.Enqueue(FakeHttpMessageHandler.Json(HttpStatusCode.Created, """
+            {"id": 99, "quantity": 2, "book_format": "PRINT"}
+            """));
+
+        using var client = CreateClient(fake);
+        var added = await client.Collection.AddAsync(new Models.CollectionAddItem
+        {
+            IssueId = 123,
+            Quantity = 2,
+            BookFormat = Models.BookFormatEnum.PRINT,
+        });
+
+        Assert.Equal(99, added.Id);
+        Assert.Equal(2, added.Quantity);
+
+        var request = Assert.Single(fake.Requests);
+        Assert.Equal(HttpMethod.Post, request.Method);
+        Assert.IsType<MultipartFormDataContent>(request.Content);
+        Assert.Equal("https://metron.cloud/api/collection/add/", request.RequestUri!.ToString());
+    }
+
+    [Fact]
+    public async Task Collection_RemoveAsync_SendsDeleteRequest()
+    {
+        var fake = new FakeHttpMessageHandler();
+        fake.Enqueue(new HttpResponseMessage(HttpStatusCode.NoContent));
+
+        using var client = CreateClient(fake);
+        await client.Collection.RemoveAsync(7);
+
+        var request = Assert.Single(fake.Requests);
+        Assert.Equal(HttpMethod.Delete, request.Method);
+        Assert.Equal("https://metron.cloud/api/collection/7/", request.RequestUri!.ToString());
+    }
 }
