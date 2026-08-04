@@ -28,6 +28,14 @@ public sealed class CollectionClient(HttpClient http, JsonSerializerOptions json
     public Task<CollectionRatingUpdate> PartialUpdateAsync(int id, PatchedCollectionRatingUpdate rating, CancellationToken cancellationToken = default) =>
         SendFormAsync<CollectionRatingUpdate>(HttpMethod.Patch, $"collection/{id}/", rating, cancellationToken);
 
+    /// <summary>Removes an item from the collection.</summary>
+    public Task RemoveAsync(int id, CancellationToken cancellationToken = default) =>
+        DeleteAsync($"collection/{id}/", cancellationToken);
+
+    /// <summary>Adds an issue to the collection.</summary>
+    public Task<CollectionRead> AddAsync(CollectionAddItem item, CancellationToken cancellationToken = default) =>
+        SendFormAsync<CollectionRead>(HttpMethod.Post, "collection/add/", item, cancellationToken);
+
     /// <summary>Returns a single page of issues from a series that are missing from the collection.</summary>
     public Task<PagedResult<MissingIssue>> GetMissingIssuesAsync(int seriesId, CollectionMissingIssuesFilter? filter = null, CancellationToken cancellationToken = default) =>
         GetAsync<PagedResult<MissingIssue>>($"collection/missing_issues/{seriesId}/" + QueryStringBuilder.Build(filter), cancellationToken);

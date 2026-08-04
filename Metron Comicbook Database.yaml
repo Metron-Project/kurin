@@ -463,6 +463,10 @@ paths:
         Update the rating of a specific collection item (must belong to authenticated user).
         Read-tracking fields (is_read/date_read) are not editable here; use scrobble instead.
         Requires authentication.
+
+        destroy:
+        Remove a specific collection item (must belong to authenticated user).
+        Requires authentication.
       parameters:
       - in: query
         name: book_format
@@ -667,6 +671,10 @@ paths:
         Update the rating of a specific collection item (must belong to authenticated user).
         Read-tracking fields (is_read/date_read) are not editable here; use scrobble instead.
         Requires authentication.
+
+        destroy:
+        Remove a specific collection item (must belong to authenticated user).
+        Requires authentication.
       parameters:
       - in: path
         name: id
@@ -706,6 +714,10 @@ paths:
         update:
         Update the rating of a specific collection item (must belong to authenticated user).
         Read-tracking fields (is_read/date_read) are not editable here; use scrobble instead.
+        Requires authentication.
+
+        destroy:
+        Remove a specific collection item (must belong to authenticated user).
         Requires authentication.
       parameters:
       - in: path
@@ -758,6 +770,10 @@ paths:
         Update the rating of a specific collection item (must belong to authenticated user).
         Read-tracking fields (is_read/date_read) are not editable here; use scrobble instead.
         Requires authentication.
+
+        destroy:
+        Remove a specific collection item (must belong to authenticated user).
+        Requires authentication.
       parameters:
       - in: path
         name: id
@@ -788,6 +804,81 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CollectionRatingUpdate'
+          description: ''
+    delete:
+      operationId: api_collection_destroy
+      description: |-
+        list:
+        Returns authenticated user's collection items.
+        Requires authentication.
+
+        retrieve:
+        Returns details of a specific collection item (must belong to authenticated user).
+        Requires authentication.
+
+        partial_update:
+        Update the rating of a specific collection item (must belong to authenticated user).
+        Read-tracking fields (is_read/date_read) are not editable here; use scrobble instead.
+        Requires authentication.
+
+        update:
+        Update the rating of a specific collection item (must belong to authenticated user).
+        Read-tracking fields (is_read/date_read) are not editable here; use scrobble instead.
+        Requires authentication.
+
+        destroy:
+        Remove a specific collection item (must belong to authenticated user).
+        Requires authentication.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Collection Item.
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - knoxApiToken: []
+      responses:
+        '204':
+          description: No response body
+  /api/collection/add/:
+    post:
+      operationId: api_collection_add_create
+      description: Add an issue to the authenticated user's collection.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionAddItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CollectionAddItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CollectionAddItem'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - knoxApiToken: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionRead'
+          description: ''
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionRead'
           description: ''
   /api/collection/missing_issues/{series_id}/:
     get:
@@ -3655,6 +3746,16 @@ components:
     BlankEnum:
       enum:
       - ''
+    BookFormatEnum:
+      enum:
+      - PRINT
+      - DIGITAL
+      - BOTH
+      type: string
+      description: |-
+        * `PRINT` - Print
+        * `DIGITAL` - Digital
+        * `BOTH` - Both
     Character:
       type: object
       properties:
@@ -3790,6 +3891,54 @@ components:
       - resource_url
       - teams
       - universes
+    CollectionAddItem:
+      type: object
+      description: Serializer for adding an issue to the authenticated user's collection.
+      properties:
+        issue_id:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+          default: 1
+        book_format:
+          allOf:
+          - $ref: '#/components/schemas/BookFormatEnum'
+          default: PRINT
+        grade:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,2}(?:\.\d{0,1})?$
+          nullable: true
+        grading_company:
+          default: ''
+          oneOf:
+          - $ref: '#/components/schemas/GradingCompanyEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        purchase_date:
+          type: string
+          format: date
+          nullable: true
+        purchase_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,2})?$
+          nullable: true
+        purchase_price_currency:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyEnum'
+          default: USD
+        purchase_store:
+          type: string
+          default: ''
+        storage_location:
+          type: string
+          default: ''
+        notes:
+          type: string
+          default: ''
+      required:
+      - issue_id
     CollectionIssue:
       type: object
       description: Serializer for issues in collection (without image and cover_hash).
@@ -4787,6 +4936,16 @@ components:
       required:
       - id
       - name
+    GradingCompanyEnum:
+      enum:
+      - CGC
+      - CBCS
+      - PGX
+      type: string
+      description: |-
+        * `CGC` - CGC (Certified Guaranty Company)
+        * `CBCS` - CBCS (Comic Book Certification Service)
+        * `PGX` - PGX (Professional Grading Experts)
     Imprint:
       type: object
       properties:
