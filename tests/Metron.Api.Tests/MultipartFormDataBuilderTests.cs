@@ -62,6 +62,19 @@ public class MultipartFormDataBuilderTests
         Assert.Contains(("cover_date", "2024-03-15"), parts);
     }
 
+    [Theory]
+    [InlineData(CurrencyEnum.EUR, "2")]
+    [InlineData(CurrencyEnum.ITL, "3")]
+    public async Task Build_SerializesNewCurrencyEnumValues(CurrencyEnum currency, string expected)
+    {
+        var item = new AcquireWishListItem { PurchasePriceCurrency = currency };
+
+        using var content = MultipartFormDataBuilder.Build(item);
+        var parts = await ReadPartsAsync(content);
+
+        Assert.Contains(("purchase_price_currency", expected), parts);
+    }
+
     private static async Task<List<(string Name, string Value)>> ReadPartsAsync(MultipartFormDataContent content)
     {
         var results = new List<(string, string)>();

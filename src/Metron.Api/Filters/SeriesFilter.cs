@@ -38,6 +38,10 @@ public sealed class SeriesFilter
     [QueryParameter("imprint_name")]
     public string? ImprintName { get; set; }
 
+    /// <summary>* `af` - Afrikaans</summary>
+    [QueryParameter("language")]
+    public string? Language { get; set; }
+
     [QueryParameter("missing_cv_id")]
     public bool? MissingCvId { get; set; }
 

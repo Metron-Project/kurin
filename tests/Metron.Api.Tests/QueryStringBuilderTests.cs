@@ -54,4 +54,25 @@ public class QueryStringBuilderTests
 
         Assert.Equal("?name=Spider-Man%20%26%20Friends", query);
     }
+
+    [Fact]
+    public void Build_IncludesPublisherAltNamesAndQuickSearchFilters()
+    {
+        var filter = new PublisherFilter { AltNames = "DC", Q = "comics" };
+
+        var query = QueryStringBuilder.Build(filter);
+
+        Assert.Contains("alt_names=DC", query);
+        Assert.Contains("q=comics", query);
+    }
+
+    [Fact]
+    public void Build_IncludesSeriesLanguageFilter()
+    {
+        var filter = new SeriesFilter { Language = "en" };
+
+        var query = QueryStringBuilder.Build(filter);
+
+        Assert.Equal("?language=en", query);
+    }
 }
