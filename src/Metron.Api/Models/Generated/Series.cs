@@ -26,6 +26,9 @@ public sealed class Series
     [JsonPropertyName("alt_names")]
     public List<string>? AltNames { get; set; }
 
+    [JsonPropertyName("language")]
+    public string? Language { get; set; }
+
     /// <summary>Volume Number</summary>
     [JsonPropertyName("volume")]
     public int? Volume { get; set; }

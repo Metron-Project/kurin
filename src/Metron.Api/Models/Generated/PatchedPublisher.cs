@@ -19,6 +19,10 @@ public sealed class PatchedPublisher
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 
+    /// <summary>Alternative Names</summary>
+    [JsonPropertyName("alt_names")]
+    public List<string>? AltNames { get; set; }
+
     /// <summary>Year Founded</summary>
     [JsonPropertyName("founded")]
     public int? Founded { get; set; }

@@ -12,6 +12,9 @@ namespace Metron.Api.Filters;
 
 public sealed class PublisherFilter
 {
+    [QueryParameter("alt_names")]
+    public string? AltNames { get; set; }
+
     /// <summary>Comic Vine ID</summary>
     [QueryParameter("cv_id")]
     public int? CvId { get; set; }
@@ -30,4 +33,8 @@ public sealed class PublisherFilter
     /// <summary>A page number within the paginated result set.</summary>
     [QueryParameter("page")]
     public int? Page { get; set; }
+
+    /// <summary>Quick search across name and alternative names</summary>
+    [QueryParameter("q")]
+    public string? Q { get; set; }
 }

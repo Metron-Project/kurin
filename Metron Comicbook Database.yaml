@@ -1826,6 +1826,10 @@ paths:
         Update a publisher's information.
       parameters:
       - in: query
+        name: alt_names
+        schema:
+          type: string
+      - in: query
         name: cv_id
         schema:
           type: integer
@@ -1851,6 +1855,11 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
+      - in: query
+        name: q
+        schema:
+          type: string
+        description: Quick search across name and alternative names
       tags:
       - api
       security:
@@ -2436,6 +2445,89 @@ paths:
         schema:
           type: string
           enum:
+          - en
+          - it
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - knoxApiToken: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/series/:
+    get:
+      operationId: api_series_list
+      description: |-
+        list:
+        Returns a list of all the comic series.
+
+        retrieve:
+        Returns the information of an individual comic series.
+
+        create:
+        Add a new Series.
+
+        update:
+        Update a Series information.
+      parameters:
+      - in: query
+        name: alt_names
+        schema:
+          type: string
+      - in: query
+        name: character_id
+        schema:
+          type: integer
+        description: Character Metron ID
+      - in: query
+        name: creator_id
+        schema:
+          type: integer
+        description: Creator Metron ID
+      - in: query
+        name: cv_id
+        schema:
+          type: integer
+        description: Comic Vine ID
+      - in: query
+        name: gcd_id
+        schema:
+          type: integer
+        description: Grand Comics Database ID
+      - in: query
+        name: imprint_id
+        schema:
+          type: integer
+        description: Imprint Metron ID
+      - in: query
+        name: imprint_name
+        schema:
+          type: string
+      - in: query
+        name: language
+        schema:
+          type: string
+          enum:
           - af
           - ar
           - ar-dz
@@ -2536,82 +2628,107 @@ paths:
           - vi
           - zh-hans
           - zh-hant
-      tags:
-      - api
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - knoxApiToken: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/vnd.oai.openapi:
-              schema:
-                type: object
-                additionalProperties: {}
-            application/yaml:
-              schema:
-                type: object
-                additionalProperties: {}
-            application/vnd.oai.openapi+json:
-              schema:
-                type: object
-                additionalProperties: {}
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-          description: ''
-  /api/series/:
-    get:
-      operationId: api_series_list
-      description: |-
-        list:
-        Returns a list of all the comic series.
-
-        retrieve:
-        Returns the information of an individual comic series.
-
-        create:
-        Add a new Series.
-
-        update:
-        Update a Series information.
-      parameters:
-      - in: query
-        name: alt_names
-        schema:
-          type: string
-      - in: query
-        name: character_id
-        schema:
-          type: integer
-        description: Character Metron ID
-      - in: query
-        name: creator_id
-        schema:
-          type: integer
-        description: Creator Metron ID
-      - in: query
-        name: cv_id
-        schema:
-          type: integer
-        description: Comic Vine ID
-      - in: query
-        name: gcd_id
-        schema:
-          type: integer
-        description: Grand Comics Database ID
-      - in: query
-        name: imprint_id
-        schema:
-          type: integer
-        description: Imprint Metron ID
-      - in: query
-        name: imprint_name
-        schema:
-          type: string
+        description: |-
+          * `af` - Afrikaans
+          * `ar` - Arabic
+          * `ar-dz` - Algerian Arabic
+          * `ast` - Asturian
+          * `az` - Azerbaijani
+          * `bg` - Bulgarian
+          * `be` - Belarusian
+          * `bn` - Bengali
+          * `br` - Breton
+          * `bs` - Bosnian
+          * `ca` - Catalan
+          * `ckb` - Central Kurdish (Sorani)
+          * `cs` - Czech
+          * `cy` - Welsh
+          * `da` - Danish
+          * `de` - German
+          * `dsb` - Lower Sorbian
+          * `el` - Greek
+          * `en` - English
+          * `en-au` - Australian English
+          * `en-gb` - British English
+          * `eo` - Esperanto
+          * `es` - Spanish
+          * `es-ar` - Argentinian Spanish
+          * `es-co` - Colombian Spanish
+          * `es-mx` - Mexican Spanish
+          * `es-ni` - Nicaraguan Spanish
+          * `es-ve` - Venezuelan Spanish
+          * `et` - Estonian
+          * `eu` - Basque
+          * `fa` - Persian
+          * `fi` - Finnish
+          * `fr` - French
+          * `fy` - Frisian
+          * `ga` - Irish
+          * `gd` - Scottish Gaelic
+          * `gl` - Galician
+          * `he` - Hebrew
+          * `hi` - Hindi
+          * `hr` - Croatian
+          * `hsb` - Upper Sorbian
+          * `ht` - Haitian Creole
+          * `hu` - Hungarian
+          * `hy` - Armenian
+          * `ia` - Interlingua
+          * `id` - Indonesian
+          * `ig` - Igbo
+          * `io` - Ido
+          * `is` - Icelandic
+          * `it` - Italian
+          * `ja` - Japanese
+          * `ka` - Georgian
+          * `kab` - Kabyle
+          * `kk` - Kazakh
+          * `km` - Khmer
+          * `kn` - Kannada
+          * `ko` - Korean
+          * `ky` - Kyrgyz
+          * `lb` - Luxembourgish
+          * `lt` - Lithuanian
+          * `lv` - Latvian
+          * `mk` - Macedonian
+          * `ml` - Malayalam
+          * `mn` - Mongolian
+          * `mr` - Marathi
+          * `ms` - Malay
+          * `my` - Burmese
+          * `nb` - Norwegian Bokmål
+          * `ne` - Nepali
+          * `nl` - Dutch
+          * `nn` - Norwegian Nynorsk
+          * `os` - Ossetic
+          * `pa` - Punjabi
+          * `pl` - Polish
+          * `pt` - Portuguese
+          * `pt-br` - Brazilian Portuguese
+          * `ro` - Romanian
+          * `ru` - Russian
+          * `sk` - Slovak
+          * `sl` - Slovenian
+          * `sq` - Albanian
+          * `sr` - Serbian
+          * `sr-latn` - Serbian Latin
+          * `sv` - Swedish
+          * `sw` - Swahili
+          * `ta` - Tamil
+          * `te` - Telugu
+          * `tg` - Tajik
+          * `th` - Thai
+          * `tk` - Turkmen
+          * `tr` - Turkish
+          * `tt` - Tatar
+          * `udm` - Udmurt
+          * `ug` - Uyghur
+          * `uk` - Ukrainian
+          * `ur` - Urdu
+          * `uz` - Uzbek
+          * `vi` - Vietnamese
+          * `zh-hans` - Simplified Chinese
+          * `zh-hant` - Traditional Chinese
       - in: query
         name: missing_cv_id
         schema:
@@ -4866,10 +4983,14 @@ components:
       enum:
       - USD
       - GBP
+      - EUR
+      - ITL
       type: string
       description: |-
         * `USD` - USD
         * `GBP` - GBP
+        * `EUR` - EUR
+        * `ITL` - ITL
     DesiredGradeEnum:
       enum:
       - 10.0
@@ -5493,6 +5614,10 @@ components:
           items:
             $ref: '#/components/schemas/Genre'
           readOnly: true
+        language:
+          oneOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          - $ref: '#/components/schemas/BlankEnum'
       required:
       - genres
       - id
@@ -5501,6 +5626,210 @@ components:
       - sort_name
       - volume
       - year_began
+    LanguageEnum:
+      enum:
+      - af
+      - ar
+      - ar-dz
+      - ast
+      - az
+      - bg
+      - be
+      - bn
+      - br
+      - bs
+      - ca
+      - ckb
+      - cs
+      - cy
+      - da
+      - de
+      - dsb
+      - el
+      - en
+      - en-au
+      - en-gb
+      - eo
+      - es
+      - es-ar
+      - es-co
+      - es-mx
+      - es-ni
+      - es-ve
+      - et
+      - eu
+      - fa
+      - fi
+      - fr
+      - fy
+      - ga
+      - gd
+      - gl
+      - he
+      - hi
+      - hr
+      - hsb
+      - ht
+      - hu
+      - hy
+      - ia
+      - id
+      - ig
+      - io
+      - is
+      - it
+      - ja
+      - ka
+      - kab
+      - kk
+      - km
+      - kn
+      - ko
+      - ky
+      - lb
+      - lt
+      - lv
+      - mk
+      - ml
+      - mn
+      - mr
+      - ms
+      - my
+      - nb
+      - ne
+      - nl
+      - nn
+      - os
+      - pa
+      - pl
+      - pt
+      - pt-br
+      - ro
+      - ru
+      - sk
+      - sl
+      - sq
+      - sr
+      - sr-latn
+      - sv
+      - sw
+      - ta
+      - te
+      - tg
+      - th
+      - tk
+      - tr
+      - tt
+      - udm
+      - ug
+      - uk
+      - ur
+      - uz
+      - vi
+      - zh-hans
+      - zh-hant
+      type: string
+      description: |-
+        * `af` - Afrikaans
+        * `ar` - Arabic
+        * `ar-dz` - Algerian Arabic
+        * `ast` - Asturian
+        * `az` - Azerbaijani
+        * `bg` - Bulgarian
+        * `be` - Belarusian
+        * `bn` - Bengali
+        * `br` - Breton
+        * `bs` - Bosnian
+        * `ca` - Catalan
+        * `ckb` - Central Kurdish (Sorani)
+        * `cs` - Czech
+        * `cy` - Welsh
+        * `da` - Danish
+        * `de` - German
+        * `dsb` - Lower Sorbian
+        * `el` - Greek
+        * `en` - English
+        * `en-au` - Australian English
+        * `en-gb` - British English
+        * `eo` - Esperanto
+        * `es` - Spanish
+        * `es-ar` - Argentinian Spanish
+        * `es-co` - Colombian Spanish
+        * `es-mx` - Mexican Spanish
+        * `es-ni` - Nicaraguan Spanish
+        * `es-ve` - Venezuelan Spanish
+        * `et` - Estonian
+        * `eu` - Basque
+        * `fa` - Persian
+        * `fi` - Finnish
+        * `fr` - French
+        * `fy` - Frisian
+        * `ga` - Irish
+        * `gd` - Scottish Gaelic
+        * `gl` - Galician
+        * `he` - Hebrew
+        * `hi` - Hindi
+        * `hr` - Croatian
+        * `hsb` - Upper Sorbian
+        * `ht` - Haitian Creole
+        * `hu` - Hungarian
+        * `hy` - Armenian
+        * `ia` - Interlingua
+        * `id` - Indonesian
+        * `ig` - Igbo
+        * `io` - Ido
+        * `is` - Icelandic
+        * `it` - Italian
+        * `ja` - Japanese
+        * `ka` - Georgian
+        * `kab` - Kabyle
+        * `kk` - Kazakh
+        * `km` - Khmer
+        * `kn` - Kannada
+        * `ko` - Korean
+        * `ky` - Kyrgyz
+        * `lb` - Luxembourgish
+        * `lt` - Lithuanian
+        * `lv` - Latvian
+        * `mk` - Macedonian
+        * `ml` - Malayalam
+        * `mn` - Mongolian
+        * `mr` - Marathi
+        * `ms` - Malay
+        * `my` - Burmese
+        * `nb` - Norwegian Bokmål
+        * `ne` - Nepali
+        * `nl` - Dutch
+        * `nn` - Norwegian Nynorsk
+        * `os` - Ossetic
+        * `pa` - Punjabi
+        * `pl` - Polish
+        * `pt` - Portuguese
+        * `pt-br` - Brazilian Portuguese
+        * `ro` - Romanian
+        * `ru` - Russian
+        * `sk` - Slovak
+        * `sl` - Slovenian
+        * `sq` - Albanian
+        * `sr` - Serbian
+        * `sr-latn` - Serbian Latin
+        * `sv` - Swedish
+        * `sw` - Swahili
+        * `ta` - Tamil
+        * `te` - Telugu
+        * `tg` - Tajik
+        * `th` - Thai
+        * `tk` - Turkmen
+        * `tr` - Turkish
+        * `tt` - Tatar
+        * `udm` - Udmurt
+        * `ug` - Uyghur
+        * `uk` - Ukrainian
+        * `ur` - Urdu
+        * `uz` - Uzbek
+        * `vi` - Vietnamese
+        * `zh-hans` - Simplified Chinese
+        * `zh-hant` - Traditional Chinese
     MissingIssue:
       type: object
       description: Serializer for missing issues in a series.
@@ -6412,6 +6741,12 @@ components:
         name:
           type: string
           maxLength: 255
+        alt_names:
+          type: array
+          items:
+            type: string
+            maxLength: 255
+          title: Alternative Names
         founded:
           type: integer
           maximum: 32767
@@ -6464,6 +6799,10 @@ components:
             type: string
             maxLength: 255
           title: Alternative Names
+        language:
+          oneOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          - $ref: '#/components/schemas/BlankEnum'
         volume:
           type: integer
           maximum: 32767
@@ -6615,7 +6954,7 @@ components:
         price:
           type: string
           format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
           nullable: true
         sku:
           type: string
@@ -6650,6 +6989,12 @@ components:
         name:
           type: string
           maxLength: 255
+        alt_names:
+          type: array
+          items:
+            type: string
+            maxLength: 255
+          title: Alternative Names
         founded:
           type: integer
           maximum: 32767
@@ -7152,6 +7497,10 @@ components:
             type: string
             maxLength: 255
           title: Alternative Names
+        language:
+          oneOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          - $ref: '#/components/schemas/BlankEnum'
         volume:
           type: integer
           maximum: 32767
@@ -7275,6 +7624,10 @@ components:
             type: string
             maxLength: 255
           title: Alternative Names
+        language:
+          oneOf:
+          - $ref: '#/components/schemas/LanguageEnum'
+          - $ref: '#/components/schemas/BlankEnum'
         volume:
           type: integer
           maximum: 32767
@@ -7627,7 +7980,7 @@ components:
         price:
           type: string
           format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
           nullable: true
         sku:
           type: string

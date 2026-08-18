@@ -552,12 +552,16 @@ public enum CountryEnum
 /// <summary>
 /// * `USD` - USD
 /// * `GBP` - GBP
+/// * `EUR` - EUR
+/// * `ITL` - ITL
 /// </summary>
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum CurrencyEnum
 {
     USD,
     GBP,
+    EUR,
+    ITL,
 }
 
 /// <summary>

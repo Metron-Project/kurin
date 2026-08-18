@@ -142,4 +142,63 @@ public class ClientIntegrationTests
         Assert.Equal(HttpMethod.Delete, request.Method);
         Assert.Equal("https://metron.cloud/api/collection/7/", request.RequestUri!.ToString());
     }
+
+    [Fact]
+    public async Task Publisher_ListAsync_BuildsQueryStringFromAltNamesAndQuickSearchFilter()
+    {
+        var fake = new FakeHttpMessageHandler();
+        fake.Enqueue(FakeHttpMessageHandler.Json(HttpStatusCode.OK, """
+            {"count": 0, "next": null, "previous": null, "results": []}
+            """));
+
+        using var client = CreateClient(fake);
+        await client.Publisher.ListAsync(new PublisherFilter { AltNames = "DC", Q = "comics" });
+
+        var request = Assert.Single(fake.Requests);
+        Assert.Contains("alt_names=DC", request.RequestUri!.Query);
+        Assert.Contains("q=comics", request.RequestUri!.Query);
+    }
+
+    [Fact]
+    public async Task Publisher_GetAsync_DeserializesAltNames()
+    {
+        var fake = new FakeHttpMessageHandler();
+        fake.Enqueue(FakeHttpMessageHandler.Json(HttpStatusCode.OK, """
+            {"id": 1, "name": "DC Comics", "alt_names": ["National Comics", "DC"], "modified": "2024-01-01T00:00:00Z"}
+            """));
+
+        using var client = CreateClient(fake);
+        var publisher = await client.Publisher.GetAsync(1);
+
+        Assert.Equal(["National Comics", "DC"], publisher.AltNames);
+    }
+
+    [Fact]
+    public async Task Series_ListAsync_BuildsQueryStringFromLanguageFilter()
+    {
+        var fake = new FakeHttpMessageHandler();
+        fake.Enqueue(FakeHttpMessageHandler.Json(HttpStatusCode.OK, """
+            {"count": 0, "next": null, "previous": null, "results": []}
+            """));
+
+        using var client = CreateClient(fake);
+        await client.Series.ListAsync(new SeriesFilter { Language = "it" });
+
+        var request = Assert.Single(fake.Requests);
+        Assert.Contains("language=it", request.RequestUri!.Query);
+    }
+
+    [Fact]
+    public async Task Series_GetAsync_DeserializesLanguage()
+    {
+        var fake = new FakeHttpMessageHandler();
+        fake.Enqueue(FakeHttpMessageHandler.Json(HttpStatusCode.OK, """
+            {"id": 1, "name": "Amazing Spider-Man", "language": "it", "modified": "2024-01-01T00:00:00Z"}
+            """));
+
+        using var client = CreateClient(fake);
+        var series = await client.Series.GetAsync(1);
+
+        Assert.Equal("it", series.Language);
+    }
 }

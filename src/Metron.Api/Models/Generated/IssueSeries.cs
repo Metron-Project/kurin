@@ -38,4 +38,7 @@ public sealed class IssueSeries
 
     [JsonPropertyName("genres")]
     public List<Genre>? Genres { get; set; }
+
+    [JsonPropertyName("language")]
+    public string? Language { get; set; }
 }
